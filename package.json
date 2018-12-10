@@ -1,0 +1,26 @@
+{
+  "name": "sanctuary-stats-extension",
+  "version": "1.0.0",
+  "description": "Twitch extension frontend for the Sanctuary Stats API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/palmettos/sanctuary-stats-extension.git"
+  },
+  "author": "palmettos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/palmettos/sanctuary-stats-extension/issues"
+  },
+  "homepage": "https://github.com/palmettos/sanctuary-stats-extension#readme",
+  "dependencies": {
+    "ts-loader": "^5.3.1",
+    "webpack": "^4.27.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
+  }
+}
