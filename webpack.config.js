@@ -3,7 +3,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index.ts',
+    entry: path.resolve(__dirname, 'src/index.tsx'),
     context: path.resolve(__dirname),
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -15,13 +15,26 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: 'awesome-typescript-loader',
                 exclude: /node_modules/
+            },
+            {
+                enforce: 'pre',
+                test: /\.js$/, loader: 'source-map-loader'
             }
         ]
     },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js']
+    externals: {
+        'react': 'React',
+        'react-dom': 'ReactDOM'
     },
-    devtool: 'inline-source-map',
-    plugins: [
-    ]
+    devtool: 'source-map',
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.json']
+    },
+    devServer: {
+        contentBase: path.resolve(__dirname),
+        publicPath: '/dist/',
+        host: '127.0.0.1',
+        port: 8080,
+        open: true
+    }
 };
