@@ -1,4 +1,5 @@
 import * as React from 'react';
+import './Test.scss';
 
 interface TestProps {
     test: string;
@@ -6,6 +7,10 @@ interface TestProps {
 
 export class Test extends React.Component<TestProps, {}> {
     render() {
-        return <p>{this.props.test}</p>;
+        return (
+            <div className='test'>
+                {this.props.test}
+            </div>
+        );
     }
 }

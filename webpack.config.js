@@ -1,40 +1,99 @@
-'use strict';
-
+const fs = require('fs');
 const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-    entry: path.resolve(__dirname, 'src/index.tsx'),
-    context: path.resolve(__dirname),
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
-    },
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: 'awesome-typescript-loader',
-                exclude: /node_modules/
-            },
-            {
-                enforce: 'pre',
-                test: /\.js$/, loader: 'source-map-loader'
+// defines where the bundle file will live
+const bundlePath = path.resolve(__dirname, 'dist/');
+
+module.exports = (_env,argv) => {
+    let entryPoints = {
+        VideoOverlay: {
+            path: './src/VideoOverlay.tsx',
+            outputHtml: 'video_overlay.html',
+            build: true
+        },
+        LiveConfig: {
+            path: './src/LiveConfig.tsx',
+            outputHtml: 'live_config.html',
+            build: true
+        },
+        Mobile: {
+            path: './src/Mobile.tsx',
+            outputHtml: 'mobile.html',
+            build: true
+        }
+    };
+
+    let entry = {};
+
+    // edit webpack plugins here!
+    let plugins = [
+        new webpack.HotModuleReplacementPlugin()
+    ];
+
+    for(name in entryPoints) {
+        if (entryPoints[name].build) {
+            entry[name] = entryPoints[name].path;
+            if (argv.mode === 'production') {
+                plugins.push(new HtmlWebpackPlugin({
+                    inject: true,
+                    chunks: [name],
+                    template: './template.html',
+                    filename: entryPoints[name].outputHtml
+                }));
             }
-        ]
-    },
-    externals: {
-        'react': 'React',
-        'react-dom': 'ReactDOM'
-    },
-    devtool: 'source-map',
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json']
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname),
-        publicPath: '/dist/',
-        host: '127.0.0.1',
-        port: 8080,
-        open: true
+        }
     }
-};
+
+    let config = {
+        //entry points for webpack- remove if not used/needed
+        entry,
+        optimization: {
+            minimize: false // neccessary to pass Twitch's review process
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    loader: 'awesome-typescript-loader',
+                    exclude: /node_modules/
+                },
+                {
+                    enforce: 'pre',
+                    test: /\.js$/, loader: 'source-map-loader'
+                },
+                {
+                    test: /\.scss$/,
+                    use: ['style-loader', 'css-loader', 'sass-loader']
+                }
+            ]
+        },
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js', '.json']
+        },
+        output: {
+            filename: '[name].bundle.js',
+                path: bundlePath
+        },
+        plugins
+    };
+    if (argv.mode === 'development') {
+        config.devServer = {
+            contentBase: path.join(__dirname,'public'),
+            host: argv.devrig ? 'localhost.rig.twitch.tv' : 'localhost',
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
+            port: 8080
+        };
+        if (fs.existsSync(path.resolve(__dirname,'conf/server.key'))) {
+            config.devServer.https = {
+                key: fs.readFileSync(path.resolve(__dirname,'conf/server.key')),
+                cert: fs.readFileSync(path.resolve(__dirname,'conf/server.crt'))
+            };
+        }
+    }
+
+    return config;
+}
