@@ -15,7 +15,7 @@ module.exports = (_env,argv) => {
         },
         LiveConfig: {
             path: './src/LiveConfig.tsx',
-            outputHtml: 'live_config.html',
+            outputHtml: 'config.html',
             build: true
         },
         Mobile: {
@@ -64,8 +64,12 @@ module.exports = (_env,argv) => {
                     test: /\.js$/, loader: 'source-map-loader'
                 },
                 {
-                    test: /\.scss$/,
+                    test: /\.s?css$/,
                     use: ['style-loader', 'css-loader', 'sass-loader']
+                },
+                {
+                    test: /\.(png|jpg|gif)$/,
+                    loader: 'url-loader'
                 }
             ]
         },

@@ -3,3 +3,4 @@ node_modules/
 .vscode/
 conf/
 bin/
+public/images
