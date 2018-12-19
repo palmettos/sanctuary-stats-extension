@@ -1,0 +1,25 @@
+#navbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 5px;
+    flex-shrink: 0;
+}
+
+.navbar-item {
+    text-align: center;
+    margin: 5px;
+    border: 10px solid;
+    border-radius: 3px;
+    border-image: url('../../public/images/border2.gif') 50 round;
+    flex-grow: 1;
+}
+
+.navbar-item:hover {
+    border-image: url('../../public/images/border2-hover.gif') 50 round;
+}
+
+.navbar-item:active {
+    transform: scale(0.98) translateY(-1px);
+    border-image: url('../../public/images/border2-click.gif') 50 round;
+}

@@ -30,6 +30,7 @@
         "jest": "^23.6.0",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
+        "react-perfect-scrollbar": "^1.4.2",
         "react-transition-group": "^2.5.1",
         "source-map-loader": "^0.2.4",
         "webpack": "^4.27.1"
