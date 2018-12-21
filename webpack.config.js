@@ -70,6 +70,10 @@ module.exports = (_env,argv) => {
                 {
                     test: /\.(png|jpg|gif)$/,
                     loader: 'url-loader'
+                },
+                {
+                    test: /\.svg$/,
+                    loader: 'raw-loader'
                 }
             ]
         },

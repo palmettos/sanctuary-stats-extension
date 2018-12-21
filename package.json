@@ -23,6 +23,7 @@
         "@types/animejs": "^2.0.1",
         "@types/react": "^16.7.13",
         "@types/react-dom": "^16.0.11",
+        "@types/react-svg-inline": "^2.1.1",
         "@types/react-transition-group": "^2.0.14",
         "animejs": "^2.2.0",
         "awesome-typescript-loader": "^5.2.1",
@@ -31,6 +32,7 @@
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
         "react-perfect-scrollbar": "^1.4.2",
+        "react-svg-inline": "^2.1.1",
         "react-transition-group": "^2.5.1",
         "source-map-loader": "^0.2.4",
         "webpack": "^4.27.1"
@@ -38,8 +40,10 @@
     "devDependencies": {
         "css-loader": "^2.0.0",
         "node-sass": "^4.11.0",
+        "raw-loader": "^1.0.0",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.1",
+        "svg-inline-loader": "^0.8.0",
         "typescript": "^3.2.2",
         "url-loader": "^1.1.2",
         "webpack-cli": "^3.1.2",
