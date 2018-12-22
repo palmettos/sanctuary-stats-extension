@@ -4,3 +4,5 @@ node_modules/
 conf/
 bin/
 public/images
+public/data
+public/fonts

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Diablo';
+    src: url('../../public/fonts/DIABLO_L.woff');
+}
+
 #navbar {
     display: flex;
     flex-wrap: wrap;
@@ -7,6 +12,8 @@
 }
 
 .navbar-item {
+    font-family: 'Diablo';
+    font-size: 1rem;
     text-align: center;
     margin: 5px;
     border: 10px solid;
