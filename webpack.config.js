@@ -9,18 +9,8 @@ const bundlePath = path.resolve(__dirname, 'dist/');
 module.exports = (_env,argv) => {
     let entryPoints = {
         VideoOverlay: {
-            path: './src/VideoOverlay.tsx',
+            path: './src/VideoOverlayEntry.tsx',
             outputHtml: 'video_overlay.html',
-            build: true
-        },
-        LiveConfig: {
-            path: './src/LiveConfig.tsx',
-            outputHtml: 'config.html',
-            build: true
-        },
-        Mobile: {
-            path: './src/Mobile.tsx',
-            outputHtml: 'mobile.html',
             build: true
         }
     };
