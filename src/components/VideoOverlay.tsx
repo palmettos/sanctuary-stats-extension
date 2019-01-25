@@ -3,43 +3,27 @@ import './VideoOverlay.scss';
 import {Transition} from 'react-transition-group';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import {INavigationLink, Navigation} from './Navigation';
+import { INavigation, Navigation } from './Navigation';
 import { PageContent } from './PageContent';
 
 
 export enum Page {
-    Inventory,
-    Attributes,
-    Skills
+    Inventory = 'Inventory',
+    Attributes = 'Attributes',
+    Skills = 'Skills'
 }
 
 interface VideoOverlayState {
     page: Page
 }
 
-interface IVideoOverlay {
-    navData: {[index: string]: Page},
-    navLinks: INavigationLink[]
-}
-
 export class VideoOverlay
-    extends React.Component<{}, VideoOverlayState>
-    implements IVideoOverlay {
-
-    navLinks: INavigationLink[];
-    navData: {[index: string]: Page};
+    extends React.Component<{}, VideoOverlayState> {
 
     constructor(props: {}) {
         super(props);
         this.state = {
             page: Page.Inventory
-        };
-
-        this.navLinks = [];
-        this.navData = {
-            Inventory: Page.Inventory,
-            Attributes: Page.Attributes,
-            Skills: Page.Skills
         };
     }
 
@@ -48,23 +32,26 @@ export class VideoOverlay
         let currentPage: string = Page[this.state.page];
         console.log('state.page = ' + currentPage);
 
-        this.navLinks = [];
-        for (let text in this.navData) {
-            let page = this.navData[text];
-            let cb = (e: React.MouseEvent<HTMLElement>): void => {this.setState({page})};
-            let props: INavigationLink = {
-                active: this.state.page === this.navData[text] ? true: false, 
-                text,
-                onClick: cb
+        let navProps: INavigation = {
+            activePage: this.state.page,
+            pages: {
+                [Page.Attributes]: (e: React.MouseEvent<HTMLElement>) => {
+                    this.setState({page: Page.Attributes})
+                },
+                [Page.Skills]: (e: React.MouseEvent<HTMLElement>) => {
+                    this.setState({page: Page.Skills})
+                },
+                [Page.Inventory]: (e: React.MouseEvent<HTMLElement>) => {
+                    this.setState({page: Page.Inventory})
+                }
             }
-            this.navLinks.push(props);
-        }
+        };
 
         return (
             <div id='wrapper'>
                 <div id='vertical-spacer-top' />
                 <div id='overlay'>
-                    <Navigation links = {this.navLinks} />
+                    <Navigation {...navProps} />
                     <PageContent page={this.state.page}></PageContent>
                 </div>
                 <div id='vertical-spacer-bottom' />

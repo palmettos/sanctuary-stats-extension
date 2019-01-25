@@ -1,34 +1,30 @@
 import * as React from 'react';
 import './Navigation.scss';
+import { Page } from './VideoOverlay';
+import { INavigationLink, NavigationLink } from './NavigationLink'
 
 
-export interface INavigationLink {
-    active: boolean,
-    text: string,
-    onClick(e: React.MouseEvent<HTMLElement>): void 
+export interface INavigation {
+    activePage: Page,
+    pages: {[index: string]: (e: React.MouseEvent<HTMLElement>) => void}
 }
 
-interface NavigationProps {
-    links: INavigationLink[]
-}
-
-export const Navigation: React.SFC<NavigationProps> = (props: NavigationProps) => (
-    <div id='navigation-container'>
-    {
-        props.links.map(
-            (link: INavigationLink) => {
-                let className: string = link.active? 'nav-active' : 'nav-inactive';
-                return (
-                    <button
-                        className={'nav-link ' + className}
-                        key={link.text}
-                        onClick={link.onClick}
-                    >
-                        {link.text}
-                    </button>
-                );
-            }
-        )
+export const Navigation: React.SFC<INavigation> = (props: INavigation) => {
+    let links: INavigationLink[] = [];
+    for (let page in props.pages) {
+        let link: INavigationLink = {
+            active: page === props.activePage,
+            text: page,
+            onClick: props.pages[page]
+        }
+        links.push(link);
     }
-    </div>
-);
+
+    return (
+        <div id='navigation-container'>
+        {
+            links.map((link) => <NavigationLink key={link.text} {...link} />)
+        }
+        </div>
+    );
+};
