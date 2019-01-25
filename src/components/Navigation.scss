@@ -1,7 +1,7 @@
 #navigation-container {
     display: flex;
     justify-content: space-evenly;
-    background-color: #c00;
+    background-color: #000;
 }
 
 .nav-link {
@@ -11,9 +11,11 @@
     border-left: 1px solid #fff;
     border-right: 1px solid #fff;
     border-bottom: 0px;
-    background-color: #c00;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    // background-color: #c00;
     color: #fff;
-    // background: linear-gradient(#100, #200, #100, #200, #100);
+    background: linear-gradient(#700, #c00);
     height: 35px;
     margin-right: 2px;
 }
@@ -23,7 +25,7 @@
 }
 
 .nav-inactive {
-    background-color: #800;
+    background: linear-gradient(#500, #800);
     border-bottom: 1px solid #fff;
 }
 

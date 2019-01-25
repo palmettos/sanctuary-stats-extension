@@ -4,7 +4,7 @@ import {Transition} from 'react-transition-group';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { INavigation, Navigation } from './Navigation';
-import { PageContent } from './PageContent';
+import { Inventory } from './Inventory';
 
 
 export enum Page {
@@ -47,12 +47,23 @@ export class VideoOverlay
             }
         };
 
+        let pageComponent: JSX.Element;
+        switch (this.state.page) {
+            case Page.Inventory:
+                pageComponent = <Inventory />;
+                break;
+            default:
+                pageComponent = <div>{'some other component'}</div>;
+        }
+
         return (
             <div id='wrapper'>
                 <div id='vertical-spacer-top' />
                 <div id='overlay'>
                     <Navigation {...navProps} />
-                    <PageContent page={this.state.page}></PageContent>
+                    <div id='page-content-container'>
+                        {pageComponent}
+                    </div>
                 </div>
                 <div id='vertical-spacer-bottom' />
             </div>
