@@ -12,7 +12,7 @@ export const NavigationLink: React.SFC<INavigationLink> = (props: INavigationLin
     return (
         <button
             className={'nav-link ' + activeClass}
-            onClick={props.onClick}
+            onClick={props.active ? undefined : props.onClick}
         >
             {props.text}
         </button>
