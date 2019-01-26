@@ -12,7 +12,7 @@ interface InventoryState {
 export class Inventory extends React.Component<IInventory, InventoryState> {
     render() {
         return (
-            <div>{'LevelSelector placeholder'}</div>
+            <div className='placeholder'>{'LevelSelector placeholder'}</div>
         );
     }
 }

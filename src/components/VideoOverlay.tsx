@@ -8,13 +8,30 @@ import { Inventory } from './Inventory';
 
 
 export enum Page {
-    Inventory = 'Inventory',
     Attributes = 'Attributes',
-    Skills = 'Skills'
+    Skills = 'Skills',
+    Inventory = 'Inventory'
+}
+
+export enum Endpoint {
+    Attributes = '/attributes',
+    Skills = '/skills',
+    Items = '/items'
+}
+
+interface APIEndpointState {
+    updateRequired: boolean,
+    updating: boolean
 }
 
 interface VideoOverlayState {
-    page: Page
+    page: Page,
+    endpoints: {[index: string]: APIEndpointState}
+}
+
+interface IAPIDataStore {
+    store: object,
+    getDataFromEndpoint(endpoint: string): void
 }
 
 export class VideoOverlay
@@ -23,7 +40,21 @@ export class VideoOverlay
     constructor(props: {}) {
         super(props);
         this.state = {
-            page: Page.Inventory
+            page: Page.Inventory,
+            endpoints: {
+                [Endpoint.Attributes]: {
+                    updateRequired: true,
+                    updating: false
+                },
+                [Endpoint.Skills]: {
+                    updateRequired: true,
+                    updating: false
+                },
+                [Endpoint.Items]: {
+                    updateRequired: true,
+                    updating: false
+                },
+            }
         };
     }
 
@@ -53,7 +84,7 @@ export class VideoOverlay
                 pageComponent = <Inventory />;
                 break;
             default:
-                pageComponent = <div>{'some other component'}</div>;
+                pageComponent = <div className='placeholder'>{'some other component'}</div>;
         }
 
         return (
