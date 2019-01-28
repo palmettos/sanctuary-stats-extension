@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { ExtensionHelper } from '../VideoOverlayEntry';
+import { VideoOverlay } from './VideoOverlay';
 
 
 interface AuthorizationData {
@@ -32,32 +34,42 @@ interface ContextData {
 }
 
 interface ITwitchInterface {
-    ext: any
+    ext: ExtensionHelper
 }
 
 interface ITwitchCallbacks {
-    extOnAuthorized(data: AuthorizationData): void,
-    extOnContext(context: ContextData, changed: string[]): void
-    extOnError(error: number): void
+    authorizedHook(data: AuthorizationData): void,
+    contextHook(context: ContextData, changed: string[]): void
+    errorHook(error: number): void
 }
 
-class TwitchInterface
+export class TwitchInterface
     extends React.Component<ITwitchInterface>
     implements ITwitchCallbacks {
 
     constructor(props: ITwitchInterface) {
         super(props);
+
+        this.props.ext.onAuthorized(this.authorizedHook);
+        this.props.ext.onContext(this.contextHook);
     }
 
-    extOnAuthorized(data: AuthorizationData) {
-
+    render() {
+        return <VideoOverlay />
     }
 
-    extOnContext(context: ContextData, changed: string[]) {
-
+    authorizedHook(data: AuthorizationData) {
+        console.log('Authorization data: -----');
+        console.log(data);
     }
 
-    extOnError(error: number) {
-        
+    contextHook(context: ContextData, changed: string[]) {
+        console.log('Context data: -----');
+        console.log(context);
+    }
+
+    errorHook(error: number) {
+        console.log('Error data: -----');
+        console.log(error);
     }
 }

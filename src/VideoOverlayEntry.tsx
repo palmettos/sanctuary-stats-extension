@@ -1,36 +1,33 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {VideoOverlay} from './components/VideoOverlay';
+import { TwitchInterface } from './components/TwitchInterface';
 import './root.scss';
 import './normalize.css';
 
 
+export interface ExtensionHelper {
+    onAuthorized(callback: Function): void,
+    onContext(callback: Function): void,
+    onError(callback: Function): void,
+    onHighlightChanged(callback: Function): void,
+    onPositionChanged(callback: Function): void,
+    onVisibilityChanged(callback: Function): void,
+    send(target: string, contentType: string, message: Object): void,
+    send(target: string, contentType: string, message: string): void,
+    listen(target: string, callback: Function): void,
+    unlisten(target: string, callback: Function): void
+}
+
 interface ExtendedWindow extends Window {
-    Twitch: any;
+    Twitch: {
+        ext: ExtensionHelper
+    };
 }
 
 let localWindow: ExtendedWindow = window as ExtendedWindow;
 let ext: any = localWindow.Twitch.ext;
 
-ext.onAuthorized(
-    (auth: any) => {console.log(auth.clientId)}
-);
-
-ext.onContext(
-    (context: any, changed: string[]) => {
-        console.log(context);
-        console.log(changed);
-    }
-);
-
-ext.listen(
-    'broadcast',
-    (target: string, contentType: string, message: string) => {
-        console.log(message);
-    }
-)
-
 ReactDOM.render(
-    <VideoOverlay />,
+    <TwitchInterface ext={ext} />,
     document.getElementById('root')
 );
